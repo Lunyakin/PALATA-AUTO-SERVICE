@@ -5,9 +5,9 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from users.forms.login_form import LoginForm
+from users.forms.registration_form import RegistrationForm
 
 
-# Create your views here.
 class IndexView(TemplateView):
     # стартовая страница с выбором логирования или регистрации
     template_name = 'index/index.html'
@@ -18,22 +18,22 @@ class LoginToSite(LoginView):
     """Логирование на сайте (редирект указан в файле settings.py)"""
     template_name = 'index/login.html'
     form_class = LoginForm
-    extra_context = {'title': 'Index'}
+    extra_context = {'title': 'Вход'}
 
 
 class RegistrationOnSite(View):
     """Регистрация на сайте"""
-    template_name = 'first_steps/registration.html'
+    template_name = 'index/registration.html'
 
     def get(self, request):
         context = {
-            'title': 'Registration',
-            'reg_form': MyUserRegistrationForm()
+            'title': 'Регистрация',
+            'reg_form': RegistrationForm()
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = MyUserRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -43,7 +43,7 @@ class RegistrationOnSite(View):
             login(request, user)
             return redirect('home')
         context = {
-            'title': 'Registration',
+            'title': 'Регистрация',
             'reg_form': form
         }
         return render(request, self.template_name, context)

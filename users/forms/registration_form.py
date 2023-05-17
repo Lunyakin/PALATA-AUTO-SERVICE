@@ -1,11 +1,13 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.contrib.auth import get_user_model, password_validation
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
+from phonenumber_field.formfields import PhoneNumberField
 
 User = get_user_model()
 
 
-class MyUserRegistrationForm(UserCreationForm):
+class RegistrationForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254,
         widget=forms.EmailInput(
@@ -14,7 +16,7 @@ class MyUserRegistrationForm(UserCreationForm):
             }),
     )
     phone_number = PhoneNumberField(
-        widget=forms.TextInput(),
+        region='UA',
         required=True,
 
     )
