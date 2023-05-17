@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<html id='html' lang="en" class="dark">
+<!-- BEGIN: Head -->
+<head>
+{% include 'index/base/head.html' %}
+</head>
+<!-- END: Head -->
+<body>
+
+  {% block content %}{% endblock %}
+  {% include "index/base/dark_mode_switcher.html" %}
+
+  {% include 'index/base/scripts.html' %}
+
+</body>
+</html>
