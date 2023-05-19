@@ -54,7 +54,7 @@ class User(AbstractUser):
         null=True,
 
     )
-    last_login = models.DateTimeField(blank=True, null=True)  #TODO настроить время! отстает на 3 часа
+    last_login = models.DateTimeField(blank=True, null=True)  # TODO настроить время! отстает на 3 часа
 
     objects = MyUserManager()
 
@@ -66,7 +66,15 @@ class User(AbstractUser):
         verbose_name_plural = 'Пациенты'
 
     def get_full_name(self):
-        return self.first_name + self.last_name
+        return f'{self.first_name} {self.last_name}'
 
     def get_short_name(self):
         return self.first_name or self.email.split('@')[0]
+
+    def __str__(self):
+        if self.first_name and self.last_name:
+            return self.get_full_name()
+        elif self.username:
+            return self.username
+        else:
+            return f'{self.email}'
