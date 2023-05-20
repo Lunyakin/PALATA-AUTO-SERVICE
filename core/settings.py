@@ -34,12 +34,7 @@ if DEBUG:
 
 ALLOWED_HOSTS = ['*']
 
-"""-------------------- for users --------------------"""
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'my_login'
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,6 +48,14 @@ INSTALLED_APPS = [
 
     'users',
 ]
+
+"""-------------------- for users --------------------"""
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+AUTH_USER_MODEL = 'users.User'
+
+"""-------------------- for users --------------------"""
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -136,5 +139,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 """-------------------- for phonenumbers fields --------------------"""
+
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'UA'
+
+"""-------------------- for phonenumbers fields --------------------"""

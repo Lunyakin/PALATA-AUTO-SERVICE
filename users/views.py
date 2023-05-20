@@ -9,7 +9,7 @@ from users.forms.registration_form import RegistrationForm
 
 
 class IndexView(TemplateView):
-    # стартовая страница с выбором логирования или регистрации
+    """ Стартовая страница с выбором логирования или регистрации """
     template_name = 'index/index.html'
     extra_context = {'title': 'Index'}
 
@@ -47,3 +47,9 @@ class RegistrationOnSite(View):
             'reg_form': form
         }
         return render(request, self.template_name, context)
+
+
+class HomeView(TemplateView):
+    """ Стартовая страница с выбором логирования или регистрации """
+    template_name = 'index/home.html'
+    extra_context = {'title': 'Домашняя'}

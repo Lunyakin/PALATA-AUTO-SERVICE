@@ -1,0 +1,7 @@
+{% extends "index/base/base.html" %}
+
+{% block content %}
+    <h1>Home page</h1>
+    <p class="fas fa-user-alt">Пользователь: {{ user }}; Роль: {{ user.get_role_display }}</p>
+    <p>телефон: {{ user.phone_number }};</p>
+{% endblock content %}
