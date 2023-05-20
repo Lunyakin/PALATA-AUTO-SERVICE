@@ -42,16 +42,20 @@ class User(AbstractUser):
         }
     )
     username = models.CharField(
-        "username",
+        "Ник нейм",
         max_length=150,
+        unique=False,
+        blank=True
     )
     phone_number = PhoneNumberField(
         unique=True,
+        verbose_name='Номер телефона'
     )
     photo = models.ImageField(
         upload_to=path_for_users_foto,
         blank=True,
         null=True,
+        verbose_name='Фотография'
 
     )
     last_login = models.DateTimeField(blank=True, null=True)  # TODO настроить время! отстает на 3 часа
