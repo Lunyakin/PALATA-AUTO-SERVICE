@@ -1,0 +1,31 @@
+{% load static %}
+
+<li>
+    <a href="javascript:;" class="side-menu">
+        <div class="side-menu__icon"><i data-lucide="users"></i></div>
+        <div class="side-menu__title">
+            Пользователь
+            <div class="side-menu__sub-icon "><i data-lucide="chevron-down"></i></div>
+        </div>
+    </a>
+    <ul>
+        <li>
+            <a href="{% url 'users:profile' %}" class="side-menu">
+                <div class="side-menu__icon"><i data-lucide="user"></i></div>
+                <div class="side-menu__title"> Профиль</div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'users:edit-profile' %}" class="side-menu">
+                <div class="side-menu__icon"><i data-lucide="edit-3"></i></div>
+                <div class="side-menu__title"> Обновить профиль</div>
+            </a>
+        </li>
+        <li>
+            <a href="" class="side-menu">
+                <div class="side-menu__icon"><i data-lucide="trash-2"></i></div>
+                <div class="side-menu__title"> Удалить профиль</div>
+            </a>
+        </li>
+    </ul>
+</li>

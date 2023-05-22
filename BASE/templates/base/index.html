@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html id='html' lang="en" class="dark">
+<head>
+    {% include 'components/head.html' %}
+</head>
+<body class="py-5">
+{% if user.is_authenticated %}
+      {% include "components/mobile_menu.html"%}
+    <div class="flex mt-[4.7rem] md:mt-0">
+        {% include 'components/sidebar.html' %}
+        <div class="content">
+            {% include 'components/topbar.html' %}
+            <div class="grid grid-cols-12 gap-6">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        {% include "components/dark_mode_switcher.html" %}
+
+        {% include 'components/scripts.html' %}
+    </div>
+{% else %}
+    <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+        <div class="alert alert-secondary show flex items-center mb-2" role="alert">
+            <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
+            <h1>Вам нужно зарегистрироваться или авторизоваться на сайте</h1>
+            <div class="-intro-x lg:mr-20">
+                <a href="{% url 'index' %}" class="btn btn-elevated-primary mr-1 mb-2">
+                    Зайти в "Палату №6"
+                    <i data-loading-icon="puff" data-color="white"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+{% endif %}
+</body>
+</html>

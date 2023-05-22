@@ -1,0 +1,20 @@
+{% load static %}
+      <!-- BEGIN: Side Menu -->
+      <nav class="side-nav">
+          <a href="{% url 'users:home' %}" class="intro-x flex items-center pl-5 pt-4">
+              <img alt="img" class="w-6" src="dist/images/logo.svg">
+              <span class="hidden xl:block text-white text-lg ml-3"> Палата </span>
+          </a>
+          <div class="side-nav__devider my-6"></div>
+          <ul id="navigation">
+              <li>
+                  <a href="{% url 'users:home' %}" class="side-menu">
+                      <div class="side-menu__icon"> <i data-lucide="airplay"></i> </div>
+                      <div class="side-menu__title"> Панель </div>
+                  </a>
+              </li>
+                {% include "components-users/nav_for_users.html" %}
+
+          </ul>
+      </nav>
+      <!-- END: Side Menu -->

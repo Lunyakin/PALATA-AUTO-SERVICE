@@ -1,0 +1,25 @@
+{% extends "users/base/base.html" %}
+
+{% block content %}
+
+<body class="py-5">
+<div class="container">
+  <!-- BEGIN: Page -->
+  <div class="error-page flex flex-col lg:flex-row items-center justify-center h-screen text-center lg:text-left">
+    <div class="-intro-x lg:mr-20">
+      <a href="{% url 'users:login' %}" class="btn btn-danger mr-1 mb-2">
+          Зайти в "Палату №6"
+          <i data-loading-icon="puff" data-color="white"></i>
+      </a>
+    </div>
+    <div class="intro-x mt-10 lg:mt-0">
+      <a href="{% url 'users:registration' %}" class="btn btn-primary mr-1 mb-2">
+        Зарегистрироваться в "Палату №6"
+        <i data-loading-icon="oval" data-color="white"></i>
+      </a>
+    </div>
+  </div>
+  <!-- END: Page -->
+</div>
+
+{% endblock %}
