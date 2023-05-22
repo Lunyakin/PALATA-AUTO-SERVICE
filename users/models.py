@@ -6,6 +6,12 @@ from phonenumber_field.modelfields import PhoneNumberField
 from users.utils.for_models import path_for_users_foto
 
 
+class Role(models.TextChoices):
+    """Роли пользователя"""
+    MANAGER = 'MANAGER', 'Менеджер'
+    CUSTOMER = 'CUSTOMER', 'Клиент'
+
+
 class MyUserManager(BaseUserManager):
     """Создание и сохранение User по email и паролю """
 
@@ -59,6 +65,12 @@ class User(AbstractUser):
 
     )
     last_login = models.DateTimeField(blank=True, null=True)  # TODO настроить время! отстает на 3 часа
+
+    role = models.CharField(
+        max_length=15,
+        choices=Role.choices,
+        default=Role.CUSTOMER
+    )
 
     objects = MyUserManager()
 

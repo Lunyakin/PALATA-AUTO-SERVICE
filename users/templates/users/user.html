@@ -1,0 +1,13 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+<div class="col-span-12 mt-8">
+    {% include 'components-users/topic.html' %}
+
+    {% include 'components-users/profile.html' %}
+
+    {% block edit_user %}{% endblock edit_user %}
+
+
+</div>
+{% endblock content %}

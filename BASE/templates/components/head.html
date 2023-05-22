@@ -1,0 +1,16 @@
+{% load static %}
+
+<!-- BEGIN: Head -->
+
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <!-- BEGIN: CSS Assets-->
+    <link rel="stylesheet" href="{% static 'css/roboto.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <!-- END: CSS Assets-->
+
+<!-- END: Head -->

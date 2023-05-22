@@ -1,29 +1,38 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 
+from users.forms.edit_user_form import EditUserForm
 from users.forms.login_form import LoginForm
 from users.forms.registration_form import RegistrationForm
+
+User = get_user_model()
 
 
 class IndexView(TemplateView):
     """ Стартовая страница с выбором логирования или регистрации """
-    template_name = 'index/index.html'
+    template_name = 'users/index.html'
     extra_context = {'title': 'Index'}
 
 
 class LoginToSite(LoginView):
     """Логирование на сайте (редирект указан в файле settings.py)"""
-    template_name = 'index/login.html'
+    template_name = 'users/login.html'
     form_class = LoginForm
     extra_context = {'title': 'Вход'}
 
 
+class LogOut(LogoutView):
+    extra_context = {'title': 'Выход'}
+
+
 class RegistrationOnSite(View):
     """Регистрация на сайте"""
-    template_name = 'index/registration.html'
+    template_name = 'users/registration.html'
 
     def get(self, request):
         context = {
@@ -51,5 +60,38 @@ class RegistrationOnSite(View):
 
 class HomeView(TemplateView):
     """ Стартовая страница с выбором логирования или регистрации """
-    template_name = 'index/home.html'
-    extra_context = {'title': 'Домашняя'}
+    template_name = 'users/home.html'
+    extra_context = {
+        'title': 'Домашняя',
+        'topic': 'Основной отчет'
+    }
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    """Отображение информации об пользователе"""
+    template_name = 'users/user.html'
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = {
+            'title': 'Страница профиля',
+            'topic': 'Профиль'
+        }
+        return context
+
+
+class EditProfile(LoginRequiredMixin, UpdateView):
+    """Редактирование информации об пользователе"""
+    model = User
+    template_name = 'components-users/edit_profile.html'
+    form_class = EditUserForm
+    success_url = reverse_lazy('users:profile')
+    success_message = "User updated"
+
+    def get_object(slef):
+        return slef.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Редактирование профиля'
+        context['topic'] = 'Редактирование профиля'
+        return context

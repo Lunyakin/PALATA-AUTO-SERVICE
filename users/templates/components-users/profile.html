@@ -1,0 +1,55 @@
+<div class="intro-y box px-5 pt-5 mt-5">
+    <div class="flex flex-col lg:flex-row border-b border-slate-200/60 dark:border-darkmode-400 pb-5 -mx-5">
+        <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+                {% if user.photo %}
+                    <img alt="Пациент" class="rounded-full" src="{{ user.photo.url }}">
+                {% else %}
+                    <img alt="Пациент" class="rounded-full" src="">
+                {% endif %}
+            </div>
+            <div class="ml-5">
+                <div class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">{{ user.username }}</div>
+                <div class="text-slate-500">{{ user.get_role_display }}</div>
+            </div>
+        </div>
+        <div
+            class="mt-6 lg:mt-0 flex-1 px-5 border-l border-r border-slate-200/60 dark:border-darkmode-400 border-t lg:border-t-0 pt-5 lg:pt-0">
+            <div class="font-medium text-center lg:text-left lg:mt-3">Личная информация</div>
+            <div class="flex flex-col justify-center items-center lg:items-start mt-4">
+                <div class="truncate sm:whitespace-normal flex items-center">
+                    <i data-lucide="aperture" class="w-4 h-4 mr-2"></i>
+                    {% if user.first_name %}
+                        Имя: {{ user.first_name }}
+                    {% else %}
+                        Имя: ---Имя не задано---
+                    {% endif %}
+                </div>
+                <div class="truncate sm:whitespace-normal flex items-center mt-3">
+                    <i data-lucide="aperture" class="w-4 h-4 mr-2"></i>
+                    {% if user.first_name %}
+                        Фамилия: {{ user.last_name }}
+                    {% else %}
+                        Фамилия: ---Фамилия не задана---
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div
+            class="mt-6 lg:mt-0 flex-1 px-5 border-l border-r border-slate-200/60 dark:border-darkmode-400 border-t lg:border-t-0 pt-5 lg:pt-0">
+
+            <div class="font-medium text-center lg:text-left lg:mt-3">Контакты</div>
+            <div class="flex flex-col justify-center items-center lg:items-start mt-4">
+                <div class="truncate sm:whitespace-normal flex items-center">
+                    <i data-lucide="mail" class="w-4 h-4 mr-2"></i> {{ user.email }}
+                </div>
+                <div class="truncate sm:whitespace-normal flex items-center mt-3">
+                    <i data-lucide="phone" class="w-4 h-4 mr-2"></i>
+                    {{ user.phone_number.as_national }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'components-users/profile-menu.html' %}
+
+</div>
