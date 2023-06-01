@@ -13,6 +13,6 @@ urlpatterns = [
     path('profile', ProfileView.as_view(), name='profile'),
     path('edit-profile', EditProfile.as_view(), name='edit-profile'),
     path('delete', DeleteProfile.as_view(), name='delete-profile'),
-    path('home', HomeView.as_view(), name='home')
+    path('home', HomeView.as_view(), name='home'),
 
 ]
