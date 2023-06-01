@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -113,10 +113,12 @@ class DeleteProfile(LoginRequiredMixin, View):
     def post(self, request):
         form = DeleteUserForm(request.POST)
         if form.is_valid():
-
             delete_user(request.user)
             return redirect('users:registration')
-
         context = {'del_form': form}
-
         return render(request, self.template_name, context=context)
+
+
+class ChangePassword(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'components-users/change_password.html'
+    success_url = reverse_lazy("users:profile")

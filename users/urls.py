@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import IndexView, LoginToSite, RegistrationOnSite, HomeView, LogOut, ProfileView, EditProfile, \
-    DeleteProfile
+    DeleteProfile, ChangePassword
 
 app_name = 'users'
 
@@ -14,5 +14,6 @@ urlpatterns = [
     path('edit-profile', EditProfile.as_view(), name='edit-profile'),
     path('delete', DeleteProfile.as_view(), name='delete-profile'),
     path('home', HomeView.as_view(), name='home'),
+    path('change-password', ChangePassword.as_view(), name='change-password'),
 
 ]
