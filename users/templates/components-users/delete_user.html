@@ -1,0 +1,38 @@
+{% extends 'users/user.html' %}
+{% load static %}
+
+{% block delete_user %}
+<form method="post">
+    {% csrf_token %}
+    <div class="intro-y box lg:mt-5">
+    <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+        <h2 class="font-medium text-base mr-auto">
+            Подтверждение удаления аккаунта
+        </h2>
+    </div>
+    <div class="p-3">
+        <div class="flex items-start">
+            <p class="text-center text-danger mr-auto">Вы уверены, что хотите удалить аккаунт </p>
+            <p class="text-left mr-auto">"{{ user }}"?</p>
+            <div class="text-danger mt-2">{{ del_form.agreement.errors }}</div>
+
+                <div class="mt-2">
+                    <div class="form-check form-switch">
+                        <input id="checkbox-switch-7" name="{{ del_form.agreement.html_name }}" class="form-check-input" type="checkbox">
+                        <label class="form-check-label text-danger" for="checkbox-switch-7">ДА, я уверен!</label>
+                    </div>
+                </div>
+        </div>
+        <div class="flex 2xl:justify-center mt-2">
+            <button class="btn btn-elevated-primary m-5 ">
+                <a href="{% url 'users:profile' %}" class="text flex items-center" type="button">
+                    <i data-lucide="corner-down-left" class="w-4 h-4 mr-1"></i>
+                    Отменить
+                </a>
+            </button>
+            <button type="submit" class="btn btn-danger m-5"><i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Удалить аккаунт</button>
+        </div>
+    </div>
+    </div>
+</form>
+{% endblock delete_user %}
