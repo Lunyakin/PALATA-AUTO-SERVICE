@@ -20,5 +20,7 @@ class Command(BaseCommand):
         for i in range(qty):
             data_for_user = collecting_data_for_creating_users()
             User.objects.create_user(**data_for_user)
-            self.stdout.write('User "%s (%s) (%s)" создан' % (data_for_user['email'], data_for_user['phone_number'], data_for_user['password']))
+            self.stdout.write('User "%s (%s) (%s)" создан' % (
+                data_for_user['email'], data_for_user['phone_number'], data_for_user['password'])
+                              )
             time.sleep(5)

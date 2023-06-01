@@ -66,7 +66,7 @@
 
     <div class="intro-y box mt-1">
     <div class="p-5">
-        <div class="flex justify-end mt-2">
+        <div class="flex justify-end mt-3">
             <button type="submit" class="btn btn-success w-20 mr-auto">Сохранить</button>
             <button class="btn btn-primary w-20 mr-auto">
                 <a href="{% url 'users:profile' %}" class="text flex items-center" type="button">
@@ -74,7 +74,7 @@
                     Отменить
                 </a></button>
             <button class="btn btn-danger">
-                <a href="" class="text flex items-center" type="button">
+                <a href="{% url 'users:delete-profile' %}" class="text flex items-center" type="button">
                     <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
                     Удалить аккаунт
                 </a>

@@ -6,9 +6,11 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, UpdateView
 
+from users.forms.delete_user_form import DeleteUserForm
 from users.forms.edit_user_form import EditUserForm
 from users.forms.login_form import LoginForm
 from users.forms.registration_form import RegistrationForm
+from users.utils.for_views import delete_user
 
 User = get_user_model()
 
@@ -95,3 +97,26 @@ class EditProfile(LoginRequiredMixin, UpdateView):
         context['title'] = 'Редактирование профиля'
         context['topic'] = 'Редактирование профиля'
         return context
+
+
+class DeleteProfile(LoginRequiredMixin, View):
+    template_name = 'components-users/delete_user.html'
+
+    def get(self, request):
+        context = {
+            'title': 'Удаление аккаунта',
+            'topic': 'Удаление аккаунта',
+            'del_form': DeleteUserForm()
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = DeleteUserForm(request.POST)
+        if form.is_valid():
+
+            delete_user(request.user)
+            return redirect('users:registration')
+
+        context = {'del_form': form}
+
+        return render(request, self.template_name, context=context)
