@@ -100,6 +100,7 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 
 
 class DeleteProfile(LoginRequiredMixin, View):
+    """Удаление аккаунта пользователя (перевод в состояние НЕ АКТИВНЫЙ)"""
     template_name = 'components-users/delete_user.html'
 
     def get(self, request):
@@ -120,5 +121,6 @@ class DeleteProfile(LoginRequiredMixin, View):
 
 
 class ChangePassword(LoginRequiredMixin, PasswordChangeView):
+    """Изменение пароля пользователя"""
     template_name = 'components-users/change_password.html'
     success_url = reverse_lazy("users:profile")
