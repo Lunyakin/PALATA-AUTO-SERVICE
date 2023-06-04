@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
 
     'users',
+    'cars',
 ]
 
 """-------------------- for users --------------------"""
