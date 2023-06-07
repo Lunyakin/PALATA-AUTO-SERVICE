@@ -1,0 +1,11 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+<div class="col-span-12 mt-8">
+
+    {% include 'components-cars/topic.html' %}
+    {% block create_car %}    {% endblock create_car %}
+    {% block list_car %}    {% endblock list_car %}
+
+</div>
+{% endblock content %}

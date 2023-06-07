@@ -4,10 +4,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 from users import urls as users_urls
+from cars import urls as cars_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(users_urls))
+    path('', include(users_urls)),
+    path('', include(cars_urls))
 ]
 
 if settings.DEBUG:
