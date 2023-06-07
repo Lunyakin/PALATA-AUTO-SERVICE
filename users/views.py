@@ -124,3 +124,8 @@ class ChangePassword(LoginRequiredMixin, PasswordChangeView):
     """Изменение пароля пользователя"""
     template_name = 'components-users/change_password.html'
     success_url = reverse_lazy("users:profile")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['topic'] = 'Изменить пароль'
+        return context
