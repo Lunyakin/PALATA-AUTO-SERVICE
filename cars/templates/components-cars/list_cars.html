@@ -1,8 +1,47 @@
 {% extends 'car/car.html' %}
 {% load static %}
 
-    {% block list_car %}
-    <div>
-        {{ object_list }}
+{% block list_car %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <div id="success-notification-content" class="toastify-content flex "> <i class="text-success" data-lucide="check-circle"></i>
+            <div class="ml-4 mr-4">
+                <div class="font-medium">{{ message }}</div>
+            </div>
+        </div>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="grid grid-cols-12 gap-6 mt-5">
+{% for car in object_list %}
+    <div class="intro-y col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3">
+    <div class="box">
+        <div class="p-5">
+            <div class="h-40 2xl:h-56 image-fit rounded-md overflow-hidden before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-black before:to-black/10">
+                {% if car.car_photo %}
+                <img alt="" class="rounded-md" src="{{ car.car_photo.url }}">
+                {% else %}
+                <img alt="" class="rounded-md" src="{% static 'images/car/default_car.jpg' %}">
+                {% endif %}
+                <span class="absolute top-0 bg-pending/80 text-white text-xs m-5 px-2 py-1 rounded z-10">№ {{ forloop.counter }} </span>
+                <div class="absolute bottom-0 text-white px-5 pb-6 z-10"> <a href="" class="block font-medium text-base">{{ car.car_brand }}</a> <span class="text-white/90 text-xs mt-3">{{ car.car_model }}</span> </div>
+            </div>
+            <div class="text-slate-600 dark:text-slate-500 mt-5">
+                <div class="flex items-center"> <i data-lucide="link" class="w-4 h-4 mr-2"></i> Регистрационный номер: {{ car.reg_number }} </div>
+                <div class="flex items-center mt-2"> <i data-lucide="layers" class="w-4 h-4 mr-2"></i> ВинКод: {{ car.vin_code }} </div>
+                <div class="flex items-center mt-2"> <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> В палате с: {{ car.created_date }} </div>
+            </div>
+        </div>
+        <div class="flex justify-center lg:justify-end items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
+            <a class="flex items-center text-primary mr-auto" href="{% url 'cars:detail-car-info' car=car.slug %}"> <i data-lucide="eye" class="w-4 h-4 mr-1"></i> Детально </a>
+            <a class="flex items-center mr-3" href=""> <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Изм </a>
+            <a class="flex items-center text-danger" href="" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Удалить </a>
+        </div>
     </div>
-    {% endblock list_car %}
+    </div>
+{% endfor %}
+</div>
+
+{% endblock list_car %}
