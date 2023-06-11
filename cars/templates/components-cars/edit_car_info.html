@@ -8,7 +8,7 @@
     <div class="intro-y box lg:mt-5">
     <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
         <h2 class="font-medium text-base mr-auto">
-            Общая информация
+            Редактировать информацию о машине
         </h2>
     </div>
     <div class="p-5">
@@ -17,6 +17,7 @@
                 <div class="grid grid-cols-12 gap-x-5">
                     <div class="col-span-12 2xl:col-span-6">
                         <div>
+                            <div class="text-danger mt-2">{{ form.errors.reg_number }}</div>
                             <label for="edit-reg_number" class="form-label">Регистрационный номер</label>
                             <input id="edit-reg_number" name="reg_number" type="text" class="form-control" value="{{ object.reg_number }}" >
                         </div>
@@ -28,7 +29,7 @@
                     <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
                         {% if object.car_photo %}
                         <img class="rounded-md" alt="Пациент" src="{{ object.car_photo.url }}">
-                        <div title="Remove this profile photo?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
+                        <div title="Удалить фотографию машины?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
                         {% else %}
                         <img alt="Пациент" class="rounded-full" src="{% static "images/car/default_car.jpg" %}">
                         {% endif %}
