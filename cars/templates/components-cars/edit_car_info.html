@@ -1,0 +1,59 @@
+{% extends 'components-cars/detail_info.html' %}
+{% load static %}
+
+{% block edit_car_info %}
+
+<form method="post" enctype="multipart/form-data" name="edit-car-info">
+{% csrf_token %}
+    <div class="intro-y box lg:mt-5">
+    <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+        <h2 class="font-medium text-base mr-auto">
+            Редактировать информацию о машине
+        </h2>
+    </div>
+    <div class="p-5">
+        <div class="flex flex-col-reverse xl:flex-row flex-col">
+            <div class="flex-1 mt-6 xl:mt-0">
+                <div class="grid grid-cols-12 gap-x-5">
+                    <div class="col-span-12 2xl:col-span-6">
+                        <div>
+                            <div class="text-danger mt-2">{{ form.errors.reg_number }}</div>
+                            <label for="edit-reg_number" class="form-label">Регистрационный номер</label>
+                            <input id="edit-reg_number" name="reg_number" type="text" class="form-control" value="{{ object.reg_number }}" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
+                <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                    <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
+                        {% if object.car_photo %}
+                        <img class="rounded-md" alt="Пациент" src="{{ object.car_photo.url }}">
+                        <div title="Удалить фотографию машины?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
+                        {% else %}
+                        <img alt="Пациент" class="rounded-full" src="{% static "images/car/default_car.jpg" %}">
+                        {% endif %}
+                    </div>
+                    <div class="mx-auto cursor-pointer relative mt-5">
+                        <button type="button" class="btn btn-primary w-full">Сменить фото</button>
+                        <input type="file" name="car_photo" class="w-full h-full top-0 left-0 absolute opacity-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-y box mt-1">
+    <div class="p-5">
+        <div class="flex justify-end mt-3">
+            <button type="submit" class="btn btn-success w-20 mr-auto">Сохранить</button>
+            <button class="btn btn-primary">
+                <a href="{% url 'cars:detail-car-info' car=object.slug %}" class="text flex items-center" type="button">
+                    <i data-lucide="" class="w-4 h-4 mr-auto"></i>
+                    Отменить
+                </a></button>
+        </div>
+    </div>
+</form>
+
+{% endblock edit_car_info %}
