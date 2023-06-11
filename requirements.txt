@@ -19,4 +19,5 @@ python-dotenv==1.0.0
 six==1.16.0
 sqlparse==0.4.4
 tomli==2.0.1
+transliterate==1.10.2
 tzdata==2023.3
