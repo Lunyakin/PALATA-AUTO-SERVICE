@@ -5,10 +5,11 @@
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-        <div id="success-notification-content" class="toastify-content flex "> <i class="text-success" data-lucide="check-circle"></i>
-            <div class="ml-4 mr-4">
-                <div class="font-medium">{{ message }}</div>
-            </div>
+        <div class="alert alert-success alert-dismissible show flex items-center mb-2" role="alert">
+            <i data-lucide="alert-triangle" class="w-6 h-6 mr-2"></i> {{ message }}
+            <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
         </div>
     {% endfor %}
 </ul>
@@ -36,8 +37,8 @@
         </div>
         <div class="flex justify-center lg:justify-end items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
             <a class="flex items-center text-primary mr-auto" href="{% url 'cars:detail-car-info' car=car.slug %}"> <i data-lucide="eye" class="w-4 h-4 mr-1"></i> Детально </a>
-            <a class="flex items-center mr-3" href=""> <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Изм </a>
-            <a class="flex items-center text-danger" href="" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Удалить </a>
+            <a class="flex items-center mr-3" href="{% url 'cars:edit-car-info' car=car.slug %}"> <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Изм </a>
+            <a class="flex items-center text-danger" href="{% url 'cars:delete-car' car=car.slug %}" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Удалить </a>
         </div>
     </div>
     </div>

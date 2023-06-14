@@ -1,12 +1,14 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView
 
 from cars.forms.edit_car_form import EditCarForm
 from cars.forms.create_car_form import CreateCarForm
 from cars.models import Cars
-from cars.utils.for_views import create_slug
+from cars.utils.for_views import create_slug, delete_car
 
 
 class CreateCar(CreateView):
@@ -43,7 +45,7 @@ class ListCars(ListView):
 
     def get_queryset(self):
         user = self.request.user.pk
-        object_list = Cars.objects.filter(user_id=user)
+        object_list = Cars.objects.filter(user_id=user, is_deleted=False)
         return object_list
 
     def get_context_data(self, **kwargs):
@@ -76,3 +78,12 @@ class EditCar(UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Редактировать информацию о машине'
         return context
+
+
+class DeleteCar(LoginRequiredMixin, View):
+    """Удаление машины (перевод в состояние НЕ АКТИВНЫЙ)"""
+    template_name = 'components-users/delete_user.html'
+
+    def get(self, request, car):
+        delete_car(car)
+        return redirect('cars:list-car')
