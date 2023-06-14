@@ -86,4 +86,11 @@ class DeleteCar(LoginRequiredMixin, View):
 
     def get(self, request, car):
         delete_car(car)
+        temp = car.split('-')
+        brand = temp[0]
+        model = temp[1]
+        reg_number = temp[2].upper()
+        messages.success(
+            self.request, f"Машина машина {brand} {model} с {reg_number}"
+        )
         return redirect('cars:list-car')
