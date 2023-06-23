@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from cars.forms.edit_car_form import EditCarForm
 from cars.forms.create_car_form import CreateCarForm
