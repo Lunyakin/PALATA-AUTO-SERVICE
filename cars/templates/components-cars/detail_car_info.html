@@ -1,0 +1,34 @@
+{% extends 'car/car_data.html' %}
+{% load static %}
+
+
+{#{% include 'components-cars/common_data.html' %}#}
+
+{% block detail_info %}
+    <div class="intro-y box lg:mt-5">
+        <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+            <h2 class="font-medium text-base mr-auto">
+                !!!!!!!
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 2xl:col-span-9">
+                <div class="grid grid-cols-12 gap-6">
+
+                    <p>{{ car_object }}</p>
+
+                </div>
+            </div>
+            <div class="col-span-12 2xl:col-span-3">
+                <div class="2xl:border-l -mb-10 pb-10">
+                    <div class="2xl:pl-6 grid grid-cols-12 gap-x-6 2xl:gap-x-0 gap-y-6">
+                        <!-- BEGIN: Notes -->
+                        {% include 'components-cars/components-for-detail-car-infor/notes.html' %}
+                        <!-- END: Notes -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock detail_info %}

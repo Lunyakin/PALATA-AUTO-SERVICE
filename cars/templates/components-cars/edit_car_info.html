@@ -1,4 +1,4 @@
-{% extends 'components-cars/detail_info.html' %}
+{% extends 'car/car_data.html' %}
 {% load static %}
 
 {% block edit_car_info %}
@@ -27,9 +27,14 @@
             <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
                 <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                     <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                        {% if object.car_photo %}
-                        <img class="rounded-md" alt="Пациент" src="{{ object.car_photo.url }}">
-                        <div title="Удалить фотографию машины?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
+                        {% if object.car_photo.all %}
+                            {% for photo in object.car_photo.all %}
+                            <img class="rounded-md" alt="Пациент" src="{{ photo.photo.url }}">
+                            <div title="Удалить фотографию машины?"
+                                 class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </div>
+                            {% endfor %}
                         {% else %}
                         <img alt="Пациент" class="rounded-full" src="{% static "images/car/default_car.jpg" %}">
                         {% endif %}

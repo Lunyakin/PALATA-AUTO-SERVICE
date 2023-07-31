@@ -1,0 +1,18 @@
+{% extends 'car/base/car.html' %}
+{% load static %}
+
+{% block car_data %}
+    {% include 'components-cars/messages.html' %}
+
+{#    {% load car_common_data_tag %}#}
+{#    {% car_common_data %}#}
+    {% include 'components-cars/components-for-detail-car-infor/common_data.html' %}
+
+    {% block detail_info %}     {% endblock detail_info %}
+
+    {% block edit_car_info %}       {% endblock edit_car_info %}
+    {% block create_car_note %}     {% endblock create_car_note %}
+    {% block list_notes %}     {% endblock list_notes %}
+    {% block edit_notes %}      {% endblock edit_notes %}
+
+{% endblock car_data %}

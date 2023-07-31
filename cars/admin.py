@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from cars.models import Cars
+from cars.models.car import Car
 
 
 class CarsAdmin(admin.ModelAdmin):
@@ -10,4 +10,4 @@ class CarsAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('car_brand', 'car_model', 'reg_number')}
 
 
-admin.site.register(Cars, CarsAdmin)
+admin.site.register(Car, CarsAdmin)

@@ -1,5 +1,5 @@
 from django import forms
-from cars.models import Cars
+from cars.models.car import Car
 
 
 class EditCarForm(forms.ModelForm):
@@ -11,7 +11,7 @@ class EditCarForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Cars
+        model = Car
         fields = ('reg_number', 'car_photo',)
 
     def clean_reg_number(self):

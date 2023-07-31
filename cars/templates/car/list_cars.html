@@ -1,28 +1,19 @@
-{% extends 'car/car.html' %}
+{% extends 'car/base/car.html' %}
 {% load static %}
 
 {% block list_car %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-        <div class="alert alert-success alert-dismissible show flex items-center mb-2" role="alert">
-            <i data-lucide="alert-triangle" class="w-6 h-6 mr-2"></i> {{ message }}
-            <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-        </div>
-    {% endfor %}
-</ul>
-{% endif %}
+{% include 'components-cars/messages.html' %}
 
 <div class="grid grid-cols-12 gap-6 mt-5">
-{% for car in object_list %}
+{% for car in my_cars %}
     <div class="intro-y col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3">
     <div class="box">
         <div class="p-5">
             <div class="h-40 2xl:h-56 image-fit rounded-md overflow-hidden before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-black before:to-black/10">
-                {% if car.car_photo %}
-                <img alt="" class="rounded-md" src="{{ car.car_photo.url }}">
+                {% if car.car_photo.all %}
+                    {% for photo in car.car_photo.all %}
+                    <img alt="" class="rounded-md" src="{{ photo.photo.url }}">
+                    {% endfor %}
                 {% else %}
                 <img alt="" class="rounded-md" src="{% static 'images/car/default_car.jpg' %}">
                 {% endif %}
@@ -36,7 +27,7 @@
             </div>
         </div>
         <div class="flex justify-center lg:justify-end items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-            <a class="flex items-center text-primary mr-auto" href="{% url 'cars:detail-car-info' car=car.slug %}"> <i data-lucide="eye" class="w-4 h-4 mr-1"></i> Детально </a>
+            <a class="flex items-center text-primary mr-auto" href="{{ car.get_absolute_url }}"> <i data-lucide="eye" class="w-4 h-4 mr-1"></i> Детально </a>
             <a class="flex items-center mr-3" href="{% url 'cars:edit-car-info' car=car.slug %}"> <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Изм </a>
             <a class="flex items-center text-danger" href="{% url 'cars:delete-car' car=car.slug %}" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Удалить </a>
         </div>

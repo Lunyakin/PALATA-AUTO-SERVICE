@@ -1,9 +1,7 @@
 from django import forms
 
-from cars.models import Cars
 
-
-class CreateCarForm(forms.ModelForm):
+class CreateCarForm(forms.Form):
     car_brand = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -67,10 +65,6 @@ class CreateCarForm(forms.ModelForm):
         required=False
     )
 
-    class Meta:
-        model = Cars
-        fields = ('car_brand', 'car_model', 'release_year', 'reg_number', 'vin_code', 'mileage', 'car_photo')
-
     def clean_release_year(self):
         data = self.cleaned_data['release_year']
         if data.isdigit() and len(data) == 4:
@@ -93,5 +87,5 @@ class CreateCarForm(forms.ModelForm):
         if len(data) == 17:
             return data
         else:
-            error = f'Братан, проверь винкод. Егодлина должна быть 17 символов, а ты ввел {len(data)}'
+            error = f'Пациент, проверь винкод. Егод лина должна быть 17 символов, а ты ввел {len(data)}'
             raise forms.ValidationError(error)
