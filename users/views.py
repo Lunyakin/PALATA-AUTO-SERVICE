@@ -52,7 +52,7 @@ class RegistrationOnSite(View):
             password = form.cleaned_data['password1']
             user = authenticate(email=email, password=password)
             login(request, user)
-            return redirect('home')
+            return redirect('users:home')
         context = {
             'title': 'Регистрация',
             'reg_form': form

@@ -1,17 +1,17 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from users.tests.setup_data import SetUp
+from users.tests.setup_data import SetUpUser
 
 
 class TestUserModel(TestCase):
     def setUp(self):
         self.db = get_user_model()
-        self.email = SetUp.create_email()
-        self.phone_number = SetUp.create_phone_number()
-        self.password = SetUp.create_password()
-        self.first_name = SetUp.create_first_name()
-        self.last_name = SetUp.create_last_name()
-        self.username = SetUp.create_username()
+        self.email = SetUpUser.create_email()
+        self.phone_number = SetUpUser.create_phone_number()
+        self.password = SetUpUser.create_password()
+        self.first_name = SetUpUser.create_first_name()
+        self.last_name = SetUpUser.create_last_name()
+        self.username = SetUpUser.create_username()
 
     def test_create_super_user(self):
         super_user = self.db.objects.create_superuser(

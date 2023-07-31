@@ -4,7 +4,7 @@ fake = Faker()
 fake_phone_number = Faker('Uk_UA')
 
 
-class SetUp:
+class SetUpUser:
     @staticmethod
     def create_email():
         first_pat = fake.lexify(text='??????????')

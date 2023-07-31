@@ -3,10 +3,14 @@
 {% block content %}
 <div class="col-span-12 mt-8">
 
-    {% include 'components-cars/topic.html' %}
+    {% include 'car/topic.html' %}
+{#    {% include 'components-cars/common_data.html' %}#}
+
+    {% block car_data %}    {% endblock car_data %}
     {% block create_car %}    {% endblock create_car %}
     {% block list_car %}    {% endblock list_car %}
-    {% block detail_info %}    {% endblock detail_info %}
+{#    {% block commom_data %}    {% endblock commom_data %}#}
+
 
 </div>
 {% endblock content %}

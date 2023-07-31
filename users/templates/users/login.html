@@ -1,4 +1,5 @@
 {% extends "users/base/base.html" %}
+{% load static %}
 
 {% block content %}
     <body class="login">
@@ -7,7 +8,7 @@
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
             <div class="my-auto">
-                <img alt="Палата №6" class="-intro-x w-1/2 -mt-16" src="dist/images/illustration.svg">
+                <img alt="Палата №6" class="-intro-x w-1/2 -mt-16" src="{% static "images/one/IMG_4380.PNG" %}">
                 <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
                     Палата
                     <br>

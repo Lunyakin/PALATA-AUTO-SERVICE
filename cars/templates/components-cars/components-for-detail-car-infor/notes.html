@@ -1,0 +1,52 @@
+<div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3 2xl:mt-8">
+    <div class="intro-x flex items-center h-10">
+        <h2 class="text-lg font-medium truncate mr-5">
+            Заметки
+        </h2>
+        <div>
+            <button class="btn btn-sm btn-primary w-30 mr-1 mb-2">
+                <a href="{% url 'cars:create-note-car' car=object.slug %}" class="text flex items-center"
+                   type="button">
+                    <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
+                    + Добавить заметку
+                </a>
+            </button>
+        </div>
+    </div>
+    <div class="mt-5">
+        {% for note in object.car_note.all %}
+            <div class="intro-x">
+                <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                    <div class="w-10 h-10 flex-none">
+                        <div class="text-slate-500 text-xs mt-0.5">{{ note.created_date }}</div>
+                    </div>
+                    <div class="ml-4 mr-auto">
+                        <div class="font-medium">{{ note.title|truncatechars:7 }}</div>
+                    </div>
+                    {% for note_photo in note.car_note_foto.all %}
+                        {% if forloop.counter <= 3 %}
+                        <div class="flex">
+                            {% if forloop.first %}
+                            <div class="w-10 h-10 image-fit zoom-in">
+                                <img alt="{{ forloop.counter }}" class="tooltip rounded-full" src="{{ note_photo.photo.url }}"
+                                     title="">
+                            </div>
+                            {% else %}
+                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
+                                <img alt="{{ forloop.counter }}" class="tooltip rounded-full" src="{{ note_photo.photo.url }}"
+                                     title="">
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        {% empty %}
+            <div class="alert alert-dark show flex items-center mb-2" role="alert">
+                <i data-lucide="alert-triangle" class="w-6 h-6 mr-2"></i> К машине нет заметок
+            </div>
+        {% endfor %}
+    </div>
+</div>

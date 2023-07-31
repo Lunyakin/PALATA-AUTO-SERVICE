@@ -1,65 +1,73 @@
-{% extends 'car/car.html' %}
+{% extends 'car/base/car.html' %}
 {% load static %}
 
 {% block create_car %}
-<!-- BEGIN: Wizard Layout -->
-<div class="intro-y box py-10 sm:py-20 mt-5">
+    <!-- BEGIN: Wizard Layout -->
+    <div class="intro-y box py-10 sm:py-20 mt-5">
         <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="p-5">
-            <div class="flex flex-col-reverse xl:flex-row flex-col">
-                <div class="flex-1 mt-6 xl:mt-0">
-                    <div class="grid grid-cols-12 gap-x-5">
-                        <div class="col-span-12 2xl:col-span-6">
-                            <div>
-                                <div class="text-danger mt-2">{{ form.errors.car_brand }}</div>
-                                <label for="create-car-brand" class="form-label">Марка</label>
-                                <input id="create-car-brand" name="{{ form.car_brand.html_name }}" type="text" class="form-control" >
+            {% csrf_token %}
+            <div class="p-5">
+                <div class="flex flex-col-reverse xl:flex-row flex-col">
+                    <div class="flex-1 mt-6 xl:mt-0">
+                        <div class="grid grid-cols-12 gap-x-5">
+                            <div class="col-span-12 2xl:col-span-6">
+                                <div>
+                                    <div class="text-danger mt-2">{{ form.errors.car_brand }}</div>
+                                    <label for="create-car-brand" class="form-label">Марка</label>
+                                    <input id="create-car-brand" name="{{ form.car_brand.html_name }}" type="text"
+                                           class="form-control" >
+                                </div>
+                                <div class="mt-3">
+                                    <div class="text-danger mt-2">{{ form.errors.release_year }}</div>
+                                    <label for="create-car-release" class="form-label">Год выпуска</label>
+                                    <input id="create-car-release" name="{{ form.release_year.html_name }}" type="text"
+                                           class="form-control">
+                                </div>
+                                <div class="mt-3">
+                                    <div class="text-danger mt-2">{{ form.errors.reg_number }}</div>
+                                    <label for="create-car-reg" class="form-label">Регистрационный номер</label>
+                                    <input id="create-car-reg" name="{{ form.reg_number.html_name }}" type="text"
+                                           class="form-control">
+                                </div>
                             </div>
-                            <div class="mt-3">
-                                <div class="text-danger mt-2">{{ form.errors.release_year }}</div>
-                                <label for="create-car-release" class="form-label">Год выпуска</label>
-                                <input id="create-car-release" name="{{ form.release_year.html_name }}" type="text" class="form-control">
-                            </div>
-                            <div class="mt-3">
-                                <div class="text-danger mt-2">{{ form.errors.reg_number }}</div>
-                                <label for="create-car-reg" class="form-label">Регистрационный номер</label>
-                                <input id="create-car-reg" name="{{ form.reg_number.html_name }}" type="text" class="form-control">
+                            <div class="col-span-12 2xl:col-span-6">
+                                <div class="mt-3 2xl:mt-0">
+                                    <div class="text-danger mt-2">{{ form.errors.car_model }}</div>
+                                    <label for="create-car-model" class="form-label">Модель</label>
+                                    <input id="create-car-model" name="{{ form.car_model.html_name }}" type="text"
+                                           class="form-control">
+                                </div>
+                                <div class="mt-3">
+                                    <div class="text-danger mt-2">{{ form.errors.mileage }}</div>
+                                    <label for="create-cat-mileage" class="form-label">Пробег</label>
+                                    <input id="create-cat-mileage" name="{{ form.mileage.html_name }}" type="text"
+                                           class="form-control">
+                                </div>
+                                <div class="mt-3">
+                                    <div class="text-danger mt-2">{{ form.errors.vin_code }}</div>
+                                    <label for="create-cat-vin_code" class="form-label">Винкод</label>
+                                    <input id="create-cat-vin_code" name="{{ form.vin_code.html_name }}" type="text"
+                                           class="form-control">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-span-12 2xl:col-span-6">
-                            <div class="mt-3 2xl:mt-0">
-                                <div class="text-danger mt-2">{{ form.errors.car_model }}</div>
-                                <label for="create-car-model" class="form-label">Модель</label>
-                                <input id="create-car-model" name="{{ form.car_model.html_name }}" type="text" class="form-control">
-                            </div>
-                            <div class="mt-3">
-                                <div class="text-danger mt-2">{{ form.errors.mileage }}</div>
-                                <label for="create-cat-mileage" class="form-label">Пробег</label>
-                                <input id="create-cat-mileage" name="{{ form.mileage.html_name }}" type="text" class="form-control" >
-                            </div>
-                            <div class="mt-3">
-                                <div class="text-danger mt-2">{{ form.errors.vin_code }}</div>
-                                <label for="create-cat-vin_code" class="form-label">Винкод</label>
-                                <input id="create-cat-vin_code" name="{{ form.vin_code.html_name }}" type="text" class="form-control" >
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary w-20 mr-auto mt-4">Сохранить</button>
                     </div>
-                  <button type="submit" class="btn btn-primary w-20 mr-auto mt-4">Сохранить</button>
-                </div>
-                <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
-                    <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-10">
-                        <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto ">
-                             <div class="fallback"> <input name="{{ form.car_photo.html_name }}" type="file" class="w-full h-full top-0 left-0 absolute opacity-0"> </div>
-                             <div class="dz-message" >
-                                 <div class="text-lg font-medium">Нажми или перетащи фотографию машины</div>
-                             </div>
+                    <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
+                        <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-10">
+                            <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto ">
+                                <div class="fallback"><input name="{{ form.car_photo.html_name }}" type="file"
+                                                             class="w-full h-full top-0 left-0 absolute opacity-0">
+                                </div>
+                                <div class="dz-message">
+                                    <div class="text-lg font-medium">Нажми или перетащи фотографию машины</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </form>
-</div>
-<!-- END: Wizard Layout -->
+    </div>
+    <!-- END: Wizard Layout -->
 {% endblock create_car %}

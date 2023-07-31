@@ -4,7 +4,7 @@ from django.shortcuts import reverse
 from cars.utils.for_models import path_for_cars_foto
 
 
-class Cars(models.Model):
+class Car(models.Model):
     user = models.ForeignKey(
         to='users.User', related_name='car', on_delete=models.PROTECT
     )
@@ -26,9 +26,6 @@ class Cars(models.Model):
     mileage = models.PositiveIntegerField(
         null=False, blank=False, verbose_name='Километраж'
     )
-    car_photo = models.ImageField(
-        upload_to=path_for_cars_foto, blank=True, null=True, verbose_name='Фотография'
-    )
     created_date = models.DateField(auto_now_add=True)
     is_deleted = models.BooleanField(verbose_name='Удалена', default=False)
     slug = models.SlugField(
@@ -44,4 +41,4 @@ class Cars(models.Model):
         return self.reg_number
 
     def get_absolute_url(self):
-        return reverse('car', kwargs={'car': self.slug})
+        return reverse('cars:detail-car-info', kwargs={'car': self.slug})

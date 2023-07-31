@@ -1,12 +1,12 @@
 from django.test import TestCase
 from users.forms.registration_form import RegistrationForm
-from users.tests.setup_data import SetUp
+from users.tests.setup_data import SetUpUser
 
 
 class TestRegistrationsForm(TestCase):
     def setUp(self):
-        self.password = SetUp.create_password()
-        self.email = SetUp.create_email()
+        self.password = SetUpUser.create_password()
+        self.email = SetUpUser.create_email()
         self.phone_number = '+380506468202'
 
     def test_registrations_form_is_valid(self):
