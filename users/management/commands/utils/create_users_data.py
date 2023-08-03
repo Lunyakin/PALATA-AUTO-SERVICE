@@ -1,5 +1,5 @@
 import random
-from users.tests.setup_data import SetUpUser
+from users.tests.setup_data_user import SetUpUser
 
 
 def collecting_data_for_creating_users() -> dict:

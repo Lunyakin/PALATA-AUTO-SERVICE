@@ -1,6 +1,6 @@
 from django.test import TestCase
 from users.forms.registration_form import RegistrationForm
-from users.tests.setup_data import SetUpUser
+from users.tests.setup_data_user import SetUpUser
 
 
 class TestRegistrationsForm(TestCase):
