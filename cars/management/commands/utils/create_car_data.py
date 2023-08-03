@@ -1,3 +1,33 @@
+from django.contrib.auth import get_user_model
+
+from cars.tests.setup_data_car import SetUpCar
+from cars.utils.for_views import create_slug
+
+User = get_user_model()
+
+
+def create_data_for_creating_car() -> dict:
+
+    data = {
+        'car_brand': SetUpCar.create_car_brand(),
+        'car_model': SetUpCar.create_car_model(),
+        'release_year': SetUpCar.create_car_release_year(),
+        'reg_number': SetUpCar.create_car_reg_number(),
+        'vin_code': SetUpCar.create_car_vin_code(length=17),
+        'mileage': SetUpCar.create_car_mileage(),
+    }
+    data.update({
+        'slug': create_slug(
+            car_brand=data['car_brand'],
+            car_model=data['car_model'],
+            reg_number=data['reg_number']
+        )
+    })
+    return data
+
+
+print(create_data_for_creating_car())
+
 # import random
 # from users.tests.setup_data import SetUp
 #
@@ -24,6 +54,3 @@
 #
 #     data_for_creating_users = {**main_data, **temp_dict}
 #     return data_for_creating_users
-
-
-print(collecting_data_for_creating_users())

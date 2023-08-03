@@ -1,9 +1,11 @@
+import random
 import time
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
-from users.management.commands.utils.create_users_data import collecting_data_for_creating_users
+from cars.management.commands.utils.create_car_data import create_data_for_creating_car
+from cars.models import Car
 
 User = get_user_model()
 
@@ -17,10 +19,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         qty = options['qty']
 
-        for i in range(qty):
-            data_for_user = collecting_data_for_creating_users()
-            User.objects.create_user(**data_for_user)
-            self.stdout.write('User "%s (%s) (%s)" создан' % (
-                data_for_user['email'], data_for_user['phone_number'], data_for_user['password'])
-                              )
-            time.sleep(5)
+        all_users = User.objects.all()
+
+        for i in all_users:
+            for _ in range(random.randint(1, qty)):
+                data_for_car = create_data_for_creating_car()
+                Car.objects.create(user=i, **data_for_car)
+                self.stdout.write('Car "%s" создана у пользователя "%s"' % (data_for_car['reg_number'], i.pk)
+                                  )
+                time.sleep(5)
