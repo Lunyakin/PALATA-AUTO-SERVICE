@@ -27,7 +27,7 @@
                         <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ note.text|safe|truncatechars_html:40 }}</div>
                     </td>
                     <td class="w-40">
-                        {% for photo in note.car_note_foto.all %}
+                        {% for photo in note.car_note_photo.all %}
                             {% if forloop.counter <= 3 %}
                                 <div class="flex">
                                 {% if forloop.first %}

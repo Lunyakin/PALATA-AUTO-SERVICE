@@ -8,8 +8,8 @@ from cars.utils.for_models import path_for_note_foto
 class CarNote(models.Model):
     title = models.CharField(max_length=50, blank=False, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Описание')
-    created_date = models.DateField(auto_now_add=True)
-    update_date = models.DateField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=50, unique=True, db_index=True)
 
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_note')
@@ -23,14 +23,14 @@ class CarNote(models.Model):
         return f'{self.pk} {self.title}'
 
     def get_absolute_url(self):
-        return reverse('cars:detail-note', kwargs={'car_note': self.pk})
+        return reverse('cars:detail-note', kwargs={'car_note': self.slug})
 
 
 class CarNotePhoto(models.Model):
     photo = models.ImageField(upload_to=path_for_note_foto, null=True)
     created_date = models.DateField(auto_now_add=True)
 
-    car_note = models.ForeignKey(CarNote, on_delete=models.CASCADE, to_field='id', related_name='car_note_foto')
+    car_note = models.ForeignKey(CarNote, on_delete=models.CASCADE, to_field='id', related_name='car_note_photo')
 
     class Mate:
         verbose_name = 'Фотография к заметке'

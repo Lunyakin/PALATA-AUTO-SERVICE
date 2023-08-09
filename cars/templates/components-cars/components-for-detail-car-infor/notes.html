@@ -23,7 +23,7 @@
                     <div class="ml-4 mr-auto">
                         <div class="font-medium">{{ note.title|truncatechars:7 }}</div>
                     </div>
-                    {% for note_photo in note.car_note_foto.all %}
+                    {% for note_photo in note.car_note_photo.all %}
                         {% if forloop.counter <= 3 %}
                         <div class="flex">
                             {% if forloop.first %}

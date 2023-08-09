@@ -13,8 +13,7 @@ from cars.forms.create_car_form import CreateCarForm
 from cars.models import CarPhoto
 from cars.models.car_note import CarNote, CarNotePhoto
 from cars.models.car import Car
-from cars.utils.for_views import create_slug, delete_car, save_note_about_car_without_photos, \
-    save_note_about_car_with_photos, save_car
+from cars.utils.for_views import delete_car, save_note_about_car, save_car, update_note
 
 
 class CreateCar(LoginRequiredMixin, View):
@@ -71,11 +70,11 @@ class DetailCarInfo(DetailView):
     def get_queryset(self):
         slug = self.kwargs.get(self.slug_url_kwarg)
         info = Car.objects.filter(slug=slug) \
-            .select_related('user') \
+            .select_related('user', ) \
             .prefetch_related(
             Prefetch('car_photo', queryset=CarPhoto.objects.all()),
             Prefetch('car_note', queryset=CarNote.objects.filter(car__slug=slug).order_by('-update_date')),
-            Prefetch('car_note__car_note_photo', queryset=CarNotePhoto.objects.all())
+            Prefetch('car_note__car_note_photo'),
         )
         return info
 
@@ -143,10 +142,8 @@ class CreateNote(View):
 
         if form.is_valid():
             cd = form.cleaned_data
-            if photo:
-                save_note_about_car_with_photos(clean_data=cd, car=car_obj, list_of_photos=photo)
-            else:
-                save_note_about_car_without_photos(clean_data=cd, car=car_obj)
+            save_note_about_car(clean_data=cd, car=car_obj, list_of_photos=photo)
+
         messages.success(self.request, f"Заметка удачно создана")
         return redirect('cars:detail-car-info', car)
 
@@ -158,9 +155,10 @@ class ListNote(View):
     def get(self, request, car=None):
         car_object = get_object_or_404(
             Car.objects.filter(slug=car)
-            .select_related('user')
+            .select_related('user', )
             .prefetch_related(
-                Prefetch('car_note', queryset=CarNote.objects.filter(car__slug=car).order_by('-update_date')),
+                Prefetch('car_photo', queryset=CarPhoto.objects.all()),
+                Prefetch('car_note', queryset=CarNote.objects.all().order_by('-update_date')),
                 Prefetch('car_note__car_note_photo', queryset=CarNotePhoto.objects.all()),
             )
         )
@@ -172,13 +170,31 @@ class ListNote(View):
         return render(request, self.template_name, context)
 
 
-class DetailNote(DetailView):
+class DetailOrUpdateNote(View):
     template_name = 'components-cars/detail_note.html'
-    # model = CarNote
-    context_object_name = 'car_object'
-    pk_url_kwarg = 'car_note'
 
-    def get_queryset(self):
-        car_note = self.kwargs.get('car_note')
-        data = Car.objects.filter(car_note=car_note).prefetch_related('car_note__car_note_foto')
-        return data
+    def get(self, request, car_note=None):
+        data = get_object_or_404(
+            Car.objects.filter(car_note__slug=car_note)
+            .select_related('user', )
+            .prefetch_related(
+                Prefetch('car_note', queryset=CarNote.objects.filter(slug=car_note)),
+                Prefetch('car_note__car_note_photo')
+            )
+        )
+        context = {
+            'car_object': data,
+            'form': CreateNoteForm(),
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, car_note=None):
+        slug_for_car = None
+        form = CreateNoteForm(request.POST)
+        photo = request.FILES.getlist('photo')
+        if form.is_valid():
+            cd = form.cleaned_data
+            slug_for_car = update_note(clean_data=cd, list_of_photos=photo, note_slug=car_note)
+
+        messages.success(self.request, f"Заметка удачно изменена")
+        return redirect('cars:list-note', car=slug_for_car)

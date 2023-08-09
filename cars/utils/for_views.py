@@ -1,3 +1,7 @@
+import datetime
+import time
+
+from django.shortcuts import get_object_or_404
 from transliterate import slugify
 
 from cars.models import CarPhoto
@@ -46,14 +50,27 @@ def save_car(clean_data: dict, user: object, file=None):
         car_photo.save()
 
 
-def save_note_about_car_without_photos(clean_data: dict, car: object):
-    note = CarNote(title=clean_data['title'], descriptions=clean_data['descriptions'], car=car)
+def save_note_about_car(clean_data: dict, car: object, list_of_photos: list, *args):
+    add = str(datetime.datetime.now().microsecond)
+    temp = f"{clean_data['title']} {add}ыы"
+    note_slug = slugify(temp).rstrip('yy')
+
+    note = CarNote(title=clean_data['title'], text=clean_data['text'], slug=note_slug, car=car, )
     note.save()
+    if list_of_photos:
+        for _ in list_of_photos:
+            photo_for_note = CarNotePhoto(photo=_, car_note=note, *args)
+            photo_for_note.save()
 
 
-def save_note_about_car_with_photos(clean_data: dict, car: object, list_of_photos: list, *args):
-    note = CarNote(title=clean_data['title'], descriptions=clean_data['descriptions'], car=car)
+def update_note(clean_data, list_of_photos, note_slug):
+    note = get_object_or_404(CarNote.objects.filter(slug=note_slug))
+    note.title = clean_data['title']
+    note.text = clean_data['text']
     note.save()
-    for _ in list_of_photos:
-        photo_for_note = CarNotePhoto(photo=_, car_note=note, *args)
-        photo_for_note.save()
+    if list_of_photos:
+        for _ in list_of_photos:
+            photo_for_note = CarNotePhoto(photo=_, car_note=note)
+            photo_for_note.save()
+    car = get_object_or_404(Car.objects.filter(car_note__slug=note_slug))
+    return car.slug
