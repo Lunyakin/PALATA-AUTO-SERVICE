@@ -170,7 +170,7 @@ class ListNote(View):
         return render(request, self.template_name, context)
 
 
-class DetailOrUpdateNote(View):
+class DetailOrUpdateNote(View):  # TODO Реализовать удаление фотографии при редактировании
     """Детальная информация заметки к машине и изменение ее"""
     template_name = 'components-cars/detail_note.html'
 
@@ -203,6 +203,7 @@ class DetailOrUpdateNote(View):
 
 class DeleteNote(View):
     """Удаление заметки к машине"""
+
     def get(self, request, car_note):
         slug = get_object_or_404(Car.objects.filter(car_note__slug=car_note)).slug
         note = get_object_or_404(CarNote, slug=car_note)
