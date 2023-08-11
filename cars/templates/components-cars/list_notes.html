@@ -48,14 +48,17 @@
                     <td class="table-report__action w-56">
                         <div class="flex justify-center items-center">
                             <a class="flex items-center mr-3" href="{{ note.get_absolute_url }}">
-                                <i data-lucide="check-square"
-                                    class="w-4 h-4 mr-1">
-                                </i>
+                                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i>
                                 Edit
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal"
-                               data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2"
-                                                                               class="w-4 h-4 mr-1"></i> Delete </a>
+
+                            <a class="flex items-center text-danger" href="#" data-tw-toggle="modal"
+                               data-tw-target="#delete-confirmation-modal">
+                                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                                Delete
+                                <form action="{% url 'cars:delete-note' car_note=note.slug %}" id="del-note"></form>
+                            </a>
+
                         </div>
                     </td>
                 </tr>
@@ -89,7 +92,7 @@
                         <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
                             Cancel
                         </button>
-                        <button type="button" class="btn btn-danger w-24">Delete</button>
+                        <button form="del-note" type="submit" class="btn btn-danger w-24">Delete</button>
                     </div>
                 </div>
             </div>

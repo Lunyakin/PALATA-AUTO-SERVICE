@@ -1,9 +1,8 @@
 from django.urls import path
 
-from cars.views import CreateCar, ListCars, DetailCarInfo, EditCar, DeleteCar, CreateNote, ListNote, DetailOrUpdateNote
+from cars.views import *
 
 app_name = 'cars'
-
 
 urlpatterns = [
     path('car/create', CreateCar.as_view(), name='create-car'),
@@ -14,6 +13,5 @@ urlpatterns = [
     path('car/create_note/<slug:car>', CreateNote.as_view(), name='create-note-car'),
     path('car/list_note/<slug:car>', ListNote.as_view(), name='list-note'),
     path('car/detail_note/<slug:car_note>', DetailOrUpdateNote.as_view(), name='detail-note'),
-    # path('car/edit_note/<slug:car_note>', EditNote.as_view(), name='edit-note'),
+    path('car/delete_note/<slug:car_note>', DeleteNote.as_view(), name='delete-note'),
 ]
-

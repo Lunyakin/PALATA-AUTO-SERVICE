@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, FormView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, FormView, DeleteView
 
 from cars.forms.create_note_form import CreateNoteForm
 from cars.forms.edit_car_form import EditCarForm
@@ -30,7 +30,7 @@ class CreateCar(LoginRequiredMixin, View):
     def post(self, request):
         form = CreateCarForm(request.POST)
         user = request.user
-        file = request.FILES['car_photo']
+        file = request.FILES.get('car_photo')
 
         if form.is_valid():
             cd = form.cleaned_data
@@ -171,6 +171,7 @@ class ListNote(View):
 
 
 class DetailOrUpdateNote(View):
+    """Детальная информация заметки к машине и изменение ее"""
     template_name = 'components-cars/detail_note.html'
 
     def get(self, request, car_note=None):
@@ -198,3 +199,12 @@ class DetailOrUpdateNote(View):
 
         messages.success(self.request, f"Заметка удачно изменена")
         return redirect('cars:list-note', car=slug_for_car)
+
+
+class DeleteNote(View):
+    """Удаление заметки к машине"""
+    def get(self, request, car_note):
+        slug = get_object_or_404(Car.objects.filter(car_note__slug=car_note)).slug
+        note = get_object_or_404(CarNote, slug=car_note)
+        note.delete()
+        return redirect('cars:list-note', slug)

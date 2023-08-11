@@ -38,3 +38,8 @@ class CarNotePhoto(models.Model):
 
     def get_absolute_url(self):
         return reverse('car_note_foto', kwargs={'car_note_foto': self.pk})
+
+    def delete(self, using=None, keep_parents=False):
+        self.photo.delete()
+        super().delete()
+

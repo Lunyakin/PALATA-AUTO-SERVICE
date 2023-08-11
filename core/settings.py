@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     "debug_toolbar",
     'phonenumber_field',
+    'django_cleanup.apps.CleanupConfig',
 
     'users',
     'cars',
