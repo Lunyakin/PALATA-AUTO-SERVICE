@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, FormView, DeleteView
+from django.views.generic import ListView, DetailView, UpdateView
 
 from cars.forms.create_note_form import CreateNoteForm
 from cars.forms.edit_car_form import EditCarForm
@@ -207,4 +207,5 @@ class DeleteNote(View):
         slug = get_object_or_404(Car.objects.filter(car_note__slug=car_note)).slug
         note = get_object_or_404(CarNote, slug=car_note)
         note.delete()
+        messages.success(self.request, f'Заявка успешно удалена')
         return redirect('cars:list-note', slug)
