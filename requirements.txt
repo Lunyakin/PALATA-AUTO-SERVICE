@@ -2,6 +2,7 @@ asgiref==3.6.0
 colorama==0.4.6
 coverage==7.2.5
 Django==4.2
+django-cleanup==8.0.0
 django-debug-toolbar==4.1.0
 django-phonenumber-field==7.1.0
 exceptiongroup==1.1.1
