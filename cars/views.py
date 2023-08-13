@@ -42,7 +42,7 @@ class CreateCar(LoginRequiredMixin, View):
         return redirect("cars:list-car")
 
 
-class ListCars(ListView):
+class ListCars(LoginRequiredMixin, ListView):
     """Список машины"""
 
     model = Car
@@ -61,7 +61,7 @@ class ListCars(ListView):
         return context
 
 
-class DetailCarInfo(DetailView):
+class DetailCarInfo(LoginRequiredMixin, DetailView):
     """Детальная информация о машине"""
 
     template_name = "components-cars/detail_car_info.html"
@@ -73,9 +73,7 @@ class DetailCarInfo(DetailView):
         slug = self.kwargs.get(self.slug_url_kwarg)
         info = (
             Car.objects.filter(slug=slug)
-            .select_related(
-                "user",
-            )
+            .select_related("user")
             .prefetch_related(
                 Prefetch("car_photo", queryset=CarPhoto.objects.all()),
                 Prefetch(
@@ -95,7 +93,7 @@ class DetailCarInfo(DetailView):
         return context
 
 
-class EditCar(UpdateView):
+class EditCar(LoginRequiredMixin, UpdateView):
     """Редактирование машины"""
 
     template_name = "components-cars/edit_car_info.html"
@@ -110,10 +108,8 @@ class EditCar(UpdateView):
         context["title"] = "Редактировать информацию о машине"
         return context
 
-    def form_valid(
-        self,
-        form,
-    ):  # TODO Реализовать удаление старой фотографии при создании новой
+    def form_valid(self, form):
+        # TODO Реализовать удаление старой фотографии при создании новой
         self.object = form.save(commit=False)
         if self.request.FILES:
             CarPhoto.objects.update_or_create(
@@ -139,7 +135,7 @@ class DeleteCar(LoginRequiredMixin, View):
         return redirect("cars:list-car")
 
 
-class CreateNote(View):
+class CreateNote(LoginRequiredMixin, View):
     """Создание заметки к машине"""
 
     template_name = "components-cars/create_car_note.html"
@@ -165,7 +161,7 @@ class CreateNote(View):
         return redirect("cars:detail-car-info", car)
 
 
-class ListNote(View):
+class ListNote(LoginRequiredMixin, View):
     """Список всех заметок к машине"""
 
     template_name = "components-cars/list_notes.html"
@@ -173,9 +169,7 @@ class ListNote(View):
     def get(self, request, car=None):
         car_object = get_object_or_404(
             Car.objects.filter(slug=car)
-            .select_related(
-                "user",
-            )
+            .select_related("user")
             .prefetch_related(
                 Prefetch("car_photo", queryset=CarPhoto.objects.all()),
                 Prefetch(
@@ -191,9 +185,8 @@ class ListNote(View):
         return render(request, self.template_name, context)
 
 
-class DetailOrUpdateNote(
-    View
-):  # TODO Реализовать удаление фотографии при редактировании
+class DetailOrUpdateNote(LoginRequiredMixin, View):
+    # TODO Реализовать удаление фотографии при редактировании
     """Детальная информация заметки к машине и изменение ее"""
 
     template_name = "components-cars/detail_note.html"
@@ -201,9 +194,7 @@ class DetailOrUpdateNote(
     def get(self, request, car_note=None):
         data = get_object_or_404(
             Car.objects.filter(car_note__slug=car_note)
-            .select_related(
-                "user",
-            )
+            .select_related("user")
             .prefetch_related(
                 Prefetch("car_note", queryset=CarNote.objects.filter(slug=car_note)),
                 Prefetch("car_note__car_note_photo"),
@@ -229,7 +220,7 @@ class DetailOrUpdateNote(
         return redirect("cars:list-note", car=slug_for_car)
 
 
-class DeleteNote(View):
+class DeleteNote(LoginRequiredMixin, View):
     """Удаление заметки к машине"""
 
     def get(self, request, car_note):
