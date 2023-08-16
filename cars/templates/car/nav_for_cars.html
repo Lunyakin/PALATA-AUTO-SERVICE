@@ -19,15 +19,17 @@
         <li>
             <a href="{% url 'cars:list-car' %}" class="side-menu">
                 <div class="side-menu__icon"><i data-lucide="list"></i></div>
-                <div class="side-menu__title">Список машин</div>
+                <div class="side-menu__title">Список моих машин</div>
             </a>
         </li>
+        {% if user.role == 'MANAGER' %}
         <li>
             <a href="{% url 'cars:list-car' %}" class="side-menu">
                 <div class="side-menu__icon"><i data-lucide="list"></i></div>
-                <div class="side-menu__title">Список машин</div>
+                <div class="side-menu__title">Список всех машин</div>
             </a>
         </li>
+        {% endif %}
         <li>
             <a href="" class="side-menu">
                 <div class="side-menu__icon"><i data-lucide="delete"></i></div>
