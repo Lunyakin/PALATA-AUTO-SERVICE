@@ -203,6 +203,7 @@ class DetailOrUpdateNote(LoginRequiredMixin, View):
         context = {
             "car_object": data,
             "form": CreateNoteForm(),
+            "title": f"Заметка {data.slug}",
         }
         return render(request, self.template_name, context)
 
@@ -229,3 +230,13 @@ class DeleteNote(LoginRequiredMixin, View):
         note.delete()
         messages.success(self.request, f"Заявка успешно удалена")
         return redirect("cars:list-note", slug)
+
+
+class DeletePhotoNote(View):
+    """Удаление фотографии из заметки"""
+
+    def get(self, request, pk):
+        car_note = get_object_or_404(CarNote.objects.filter(car_note_photo__pk=pk)).slug
+        photo = get_object_or_404(CarNotePhoto.objects.filter(pk=pk))
+        photo.delete()
+        return redirect("cars:detail-note", car_note)

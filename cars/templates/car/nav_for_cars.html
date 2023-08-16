@@ -15,6 +15,13 @@
                 <div class="side-menu__title"> Создать</div>
             </a>
         </li>
+
+        <li>
+            <a href="{% url 'cars:list-car' %}" class="side-menu">
+                <div class="side-menu__icon"><i data-lucide="list"></i></div>
+                <div class="side-menu__title">Список машин</div>
+            </a>
+        </li>
         <li>
             <a href="{% url 'cars:list-car' %}" class="side-menu">
                 <div class="side-menu__icon"><i data-lucide="list"></i></div>
@@ -24,7 +31,7 @@
         <li>
             <a href="" class="side-menu">
                 <div class="side-menu__icon"><i data-lucide="delete"></i></div>
-                <div class="side-menu__title"> Удалить машину </div>
+                <div class="side-menu__title"> Удалить машину</div>
             </a>
         </li>
     </ul>

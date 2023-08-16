@@ -2,102 +2,116 @@
 {% load static %}
 
 {% block list_notes %}
-
-    <!-- BEGIN: Data List -->
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-    {% if car_object.car_note.all %}
-        <table class="table table-report -mt-2">
-            <thead>
-            <tr>
-                <th class="text-center whitespace-nowrap">№ п.п</th>
-                <th class="text-center whitespace-nowrap">ДАТА</th>
-                <th class="whitespace-nowrap">ЗАГОЛОВОК</th>
-                <th class="whitespace-nowrap">СОДЕРЖАНИЕ</th>
-                <th class="text-center whitespace-nowrap">ФОТО</th>
-                <th class="text-center whitespace-nowrap">ДЕЙСТВИЯ</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for note in car_object.car_note.all %}
-                <tr class="intro-x">
-                    <td class="text-center">{{ forloop.counter }}</td>
-                    <td class="text-center">{{ note.update_date }}</td>
-                    <td class="text-left">{{ note.title|truncatechars_html:20 }}</td>
-                    <td>
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ note.text|safe|truncatechars_html:40 }}</div>
-                    </td>
-                    <td class="w-40">
-                        {% for photo in note.car_note_photo.all %}
-                            {% if forloop.counter <= 3 %}
-                                <div class="flex">
-                                {% if forloop.first %}
-                                    <div class="w-10 h-10 image-fit zoom-in">
-                                        <img alt="{{ forloop.counter }}" class="tooltip rounded-full"
-                                             src="{{ photo.photo.url }}" title="">
-                                    </div>
-                                {% else %}
-                                    <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                        <img alt="{{ forloop.counter }}" class="tooltip rounded-full"
-                                             src="{{ photo.photo.url }}" title="">
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                        </div>
-                    </td>
-                    <td class="table-report__action w-56">
-                        <div class="flex justify-center items-center">
-                            <a class="flex items-center mr-3" href="{{ note.get_absolute_url }}">
-                                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i>
-                                Edit
-                            </a>
-
-                            <a class="flex items-center text-danger" href="#" data-tw-toggle="modal"
-                               data-tw-target="#delete-confirmation-modal">
-                                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
-                                Delete
-                                <form action="{% url 'cars:delete-note' car_note=note.slug %}" id="del-note"></form>
-                            </a>
-
-                        </div>
-                    </td>
-                </tr>
-
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-secondary-soft show flex items-center mb-2" role="alert">
-            <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
-            Заметок еще нет.
-        </div>
-    {% endif %}
+<div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+    <h2 class="font-medium text-base mr-auto">
+        Список всех заметок
+    </h2>
+    <div class="flex justify-end mt-3">
+        <button class="btn btn-primary">
+            <a href="{% url 'cars:create-note-car' car=car_object.slug %}" class="text flex items-center"
+               type="button">
+                <i data-lucide="corner-left-down" class="w-4 h-4 mr-auto"></i>
+                + Создать заметку
+            </a>
+        </button>
     </div>
-    <!-- END: Data List -->
-    <!-- BEGIN: Delete Confirmation Modal -->
-    <div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="p-5 text-center">
-                        <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
-                        <div class="text-3xl mt-5">Are you sure?</div>
-                        <div class="text-slate-500 mt-2">
-                            Do you really want to delete these records?
-                            <br>
-                            This process cannot be undone.
-                        </div>
+</div>
+<!-- BEGIN: Data List -->
+<div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    {% if car_object.car_note.all %}
+    <table class="table table-report -mt-2">
+        <thead>
+        <tr>
+            <th class="text-center whitespace-nowrap">№ п.п</th>
+            <th class="text-center whitespace-nowrap">ДАТА</th>
+            <th class="whitespace-nowrap">ЗАГОЛОВОК</th>
+            <th class="whitespace-nowrap">СОДЕРЖАНИЕ</th>
+            <th class="text-center whitespace-nowrap">ФОТО</th>
+            <th class="text-center whitespace-nowrap">ДЕЙСТВИЯ</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for note in car_object.car_note.all %}
+        <tr class="intro-x">
+            <td class="text-center">{{ forloop.counter }}</td>
+            <td class="text-center">{{ note.update_date }}</td>
+            <td class="text-left">{{ note.title|truncatechars_html:20 }}</td>
+            <td>
+                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ note.text|safe|truncatechars_html:40 }}
+                </div>
+            </td>
+            <td class="w-40">
+                {% for photo in note.car_note_photo.all %}
+                {% if forloop.counter <= 3 %}
+                <div class="flex">
+                    {% if forloop.first %}
+                    <div class="w-10 h-10 image-fit zoom-in">
+                        <img alt="{{ forloop.counter }}" class="tooltip rounded-full"
+                             src="{{ photo.photo.url }}" title="">
                     </div>
-                    <div class="px-5 pb-8 text-center">
-                        <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
-                            Cancel
-                        </button>
-                        <button form="del-note" type="submit" class="btn btn-danger w-24">Delete</button>
+                    {% else %}
+                    <div class="w-10 h-10 image-fit zoom-in -ml-5">
+                        <img alt="{{ forloop.counter }}" class="tooltip rounded-full"
+                             src="{{ photo.photo.url }}" title="">
                     </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </td>
+            <td class="table-report__action w-56">
+                <div class="flex justify-center items-center">
+                    <a class="flex items-center mr-3" href="{{ note.get_absolute_url }}">
+                        <i data-lucide="check-square" class="w-4 h-4 mr-1"></i>
+                        Edit
+                    </a>
+
+                    <a class="flex items-center text-danger" href="#" data-tw-toggle="modal"
+                       data-tw-target="#delete-confirmation-modal">
+                        <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                        Delete
+                        <form action="{% url 'cars:delete-note' car_note=note.slug %}" id="del-note"></form>
+                    </a>
+
+                </div>
+            </td>
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-secondary-soft show flex items-center mb-2" role="alert">
+        <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
+        Заметок еще нет.
+    </div>
+    {% endif %}
+</div>
+<!-- END: Data List -->
+<!-- BEGIN: Delete Confirmation Modal -->
+<div id="delete-confirmation-modal" class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="p-5 text-center">
+                    <i data-lucide="x-circle" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+                    <div class="text-3xl mt-5">Are you sure?</div>
+                    <div class="text-slate-500 mt-2">
+                        Do you really want to delete these records?
+                        <br>
+                        This process cannot be undone.
+                    </div>
+                </div>
+                <div class="px-5 pb-8 text-center">
+                    <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
+                        Cancel
+                    </button>
+                    <button form="del-note" type="submit" class="btn btn-danger w-24">Delete</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- END: Delete Confirmation Modal -->
+</div>
+<!-- END: Delete Confirmation Modal -->
 
 {% endblock list_notes %}
