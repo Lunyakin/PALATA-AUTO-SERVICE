@@ -13,6 +13,7 @@ from cars.forms.create_car_form import CreateCarForm
 from cars.models import CarPhoto
 from cars.models.car_note import CarNote, CarNotePhoto
 from cars.models.car import Car
+from cars.permissions import PermissionsManagerMixin
 from cars.utils.for_views import delete_car, save_note_about_car, save_car, update_note
 
 
@@ -58,6 +59,20 @@ class ListCars(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Список машин"
+        return context
+
+
+class ListAllCars(PermissionsManagerMixin, ListView):
+    model = Car
+    template_name = "car/list_cars.html"
+    context_object_name = "my_cars"
+
+    def get_queryset(self):
+        return Car.objects.filter(is_deleted=False).prefetch_related("car_photo")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Список всех машин"
         return context
 
 
@@ -232,7 +247,7 @@ class DeleteNote(LoginRequiredMixin, View):
         return redirect("cars:list-note", slug)
 
 
-class DeletePhotoNote(View):
+class DeletePhotoNote(LoginRequiredMixin, View):
     """Удаление фотографии из заметки"""
 
     def get(self, request, pk):

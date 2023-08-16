@@ -11,12 +11,14 @@
                role="tab"> <i class="w-4 h-4 mr-2" data-lucide="edit"></i> Обновить профиль </a>
         </li>
         <li id="change-password-tab" class="nav-item" role="presentation">
-            <a href="{% url 'users:change-password' %}" class="nav-link py-4 flex items-center" data-tw-target="#change-password"
+            <a href="{% url 'users:change-password' %}" class="nav-link py-4 flex items-center"
+               data-tw-target="#change-password"
                aria-selected="false" role="tab">
                 <i class="w-4 h-4 mr-2" data-lucide="lock"></i> Изменить пароль </a>
         </li>
-        <li id="change-password-tab" class="nav-item" role="presentation">
-            <a href="{% url 'users:delete-profile' %}" class="nav-link py-4 flex items-center" data-tw-target="#change-password"
+        <li id="delete-password-tab" class="nav-item" role="presentation">
+            <a href="{% url 'users:delete-profile' %}" class="nav-link py-4 flex items-center"
+               data-tw-target="#change-password"
                aria-selected="false" role="tab">
                 <i class="w-4 h-4 mr-2" data-lucide="trash-2"></i> Удалить профиль </a>
         </li>

@@ -24,7 +24,7 @@
         </li>
         {% if user.role == 'MANAGER' %}
         <li>
-            <a href="{% url 'cars:list-car' %}" class="side-menu">
+            <a href="{% url 'cars:list-all-cars' %}" class="side-menu">
                 <div class="side-menu__icon"><i data-lucide="list"></i></div>
                 <div class="side-menu__title">Список всех машин</div>
             </a>
